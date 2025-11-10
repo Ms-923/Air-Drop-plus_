@@ -1,0 +1,95 @@
+Build a lightweight, privacy-first browser file-sharing web app that sends files directly between peers using WebRTC DataChannels. The server must only handle ephemeral signaling (SDP and ICE candidate exchange) and never relay file data. Provide a minimal, well-documented reference implementation and a clean single-page UI. Deliverables, requirements, and technical details:
+
+Core features (must):
+
+Minimal signaling server (Node.js + ws) that:
+
+Accepts short room IDs and forwards JSON messages between clients in the same room.
+
+Keeps no file data and only holds ephemeral room membership in-memory.
+
+Gracefully handles clients joining/leaving and room cleanup.
+
+Single-page client (plain HTML/CSS/JS; no frameworks required) that:
+
+Lets a user create or join a room (short random id) and generate a shareable link (/?room=abc123).
+
+Connects to the signaling server via WebSocket.
+
+Establishes a peer-to-peer connection using WebRTC with a DataChannel named file.
+
+Uses a public STUN server by default (e.g., stun:stun.l.google.com:19302) and accepts a configurable TURN server list.
+
+Allows drag-and-drop or file picker selection of multiple files.
+
+Sends file metadata (name, size, mime) before sending binary chunks.
+
+Streams files in sized chunks (e.g., 16–128 KB) over the DataChannel to support large files without loading them entirely into memory.
+
+Shows per-file transfer progress (bytes sent/received), speed (KB/s), and ETA for each transfer.
+
+Provides ability to pause/cancel an ongoing transfer and resume if possible (best-effort).
+
+After a file transfer completes, present a download link on the receiver side (no server storage).
+
+Handles basic connection state UI (connecting / connected / disconnected / peer left).
+
+Implements simple UI feedback for errors (channel closed, connection failed, signalling errors).
+
+Reliability & performance:
+
+Implement basic chunk-level acknowledgment or backpressure handling to avoid DataChannel buffer overruns (e.g., check dc.bufferedAmount and throttle sending).
+
+For large files, support streaming via the File/Blob stream() reader or slice() with FileReader.
+
+Use binaryType = 'arraybuffer' and avoid sending large messages that exceed typical browser limits.
+
+Security & privacy:
+
+Do not upload file contents to the server — only send file metadata if necessary for UI.
+
+Recommend HTTPS for production and describe why secure context is required for WebRTC.
+
+Recommend using a TURN server (e.g., coturn) for reliable connectivity across restrictive NATs and include basic TURN config instructions.
+
+Add basic anti-abuse suggestions: short room id expiry, optional password for rooms, and rate limits on room creation.
+
+Extras (nice-to-have):
+
+Short link creation and optional password protection.
+
+Resume capability using chunk indices and checksums (e.g., SHA-256 per-chunk).
+
+Multiple parallel transfers with aggregate progress.
+
+Image previews and thumbnails for image files.
+
+Optional file encryption on the client (AES-GCM) with a key shared out-of-band or derived from the room token (explain tradeoffs).
+
+Fallback to relayed transfer via server or WebRTC TURN relay when direct P2P fails.
+
+Deliverables:
+
+server.js — minimal Node.js signaling server (comments explaining each section), dependency list (ws), and run instructions.
+
+public/index.html — single-page client with inline or separate JS file, clear comments, and minimal CSS for readable UI.
+
+README with:
+
+Quick start (run locally with npm install && node server.js).
+
+How to test locally (open two browsers/devices, create room, join).
+
+Production notes: HTTPS, TURN server setup (coturn basic commands), scaling signaling (stateless alternatives), and security considerations.
+
+Optional: short list of next-step enhancements and UX suggestions.
+
+Constraints & expectations for code quality:
+
+Keep code simple and readable; add comments explaining WebRTC signaling flow and DataChannel usage.
+
+No external build step required; avoid heavy frameworks so reviewers can read the code easily.
+
+Provide sensible defaults but make ICE servers and chunk size configurable.
+
+Demonstrate proper error handling for signaling, ICE candidate addition, and DataChannel states.
