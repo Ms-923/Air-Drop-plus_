@@ -1,5 +1,17 @@
 import { z } from "zod";
 
+// Legacy user types (not used in P2P app but needed for compilation)
+export interface User {
+  id: string;
+  username: string;
+  createdAt?: number;
+}
+
+export interface InsertUser {
+  username: string;
+  createdAt?: number;
+}
+
 // Environment-agnostic WebRTC types (serializable across Node and browser)
 export interface SessionDescription {
   type: 'offer' | 'answer' | 'pranswer' | 'rollback';

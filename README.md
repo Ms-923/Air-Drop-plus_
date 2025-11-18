@@ -1,6 +1,6 @@
-# P2P File Share - Privacy-First File Transfer
+# Air Drop+ - Privacy-First File Transfer
 
-A lightweight, privacy-first browser-based file sharing application that sends files directly between peers using WebRTC DataChannels. The server only handles ephemeral signaling (SDP and ICE candidate exchange) and never touches or stores file data.
+Air Drop+ is a lightweight, privacy-first browser-based file sharing application optimized for small file transfers. It sends files directly between peers using WebRTC DataChannels. The server only handles ephemeral signaling (SDP and ICE candidate exchange) and never touches or stores file data.
 
 ## Features
 
@@ -103,6 +103,13 @@ Default configuration uses public STUN servers:
   ]
 }
 ```
+
+### File Size Recommendations
+
+**Optimal Performance:**
+- **Small files (< 10MB)**: Best performance and reliability
+- **Medium files (10MB - 100MB)**: Good performance, may vary by device
+- **Large files (> 100MB)**: Not recommended, may cause browser memory issues
 
 ### Chunk Size
 
@@ -220,7 +227,7 @@ Tested on:
 
 ## Limitations & Known Issues
 
-- **Maximum File Size**: Depends on browser memory limits
+- **Maximum File Size**: Optimized for small files; large files depend on browser memory limits
 - **Mobile Safari**: May have memory constraints on large files
 - **Restrictive NATs**: May require TURN server for connectivity
 - **No Resume**: Transfer must restart if connection drops

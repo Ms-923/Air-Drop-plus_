@@ -165,10 +165,10 @@ export default function Home() {
       <div className="max-w-4xl mx-auto px-6 py-8">
         <header className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">
-            P2P File Share
+            Air Drop+
           </h1>
           <p className="text-sm text-muted-foreground">
-            Privacy-first file transfer using direct peer-to-peer connections. Files never touch the server.
+            Privacy-first file transfer using direct peer-to-peer connections. Optimized for small file transfers. Files never touch the server.
           </p>
         </header>
 
