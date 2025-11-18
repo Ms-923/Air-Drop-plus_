@@ -20,7 +20,7 @@ ENV NODE_ENV=production
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
 
-# Copy built artifacts
+# Copy built artifacts (both server and client)
 COPY --from=builder /app/dist ./dist
 
 # Vercel will inject PORT; just expose a default
